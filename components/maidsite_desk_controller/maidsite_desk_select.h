@@ -1,7 +1,7 @@
 #pragma once
 
 #include "esphome/core/component.h"
-#include "esphome/components/number/number.h"
+#include "esphome/components/select/select.h"
 #include "esphome/core/log.h"
 
 namespace esphome
@@ -10,7 +10,7 @@ namespace esphome
   {
     class MaidsiteDeskController;
 
-    class MaidsiteDeskNumber : public number::Number, public Component
+    class MaidsiteDeskSelect : public select::Select, public Component
     {
     private:
       int type;
@@ -23,11 +23,10 @@ namespace esphome
       void set_parent(MaidsiteDeskController *parent) { this->parent = parent; }
       void set_type(int type) { this->type = type; }
 
-      void set_min_value(float value);
-      void set_max_value(float value);
+      void set_options(std::vector<std::string> options);
 
     protected:
-      void control(float value) override;
+      void control(const std::string &value) override;
     };
   } // namespace maidsite_desk_controller
 } // namespace esphome

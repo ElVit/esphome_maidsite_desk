@@ -151,11 +151,19 @@ namespace esphome
           sensor_position_m4->publish_state(byte2float(message[2], message[3]));
         break;
 
-      // case 0x0E:
-      //   ESP_LOGV("maidsite_desk_controller", "units 0x%02X", message[2]);
-      //   if (units != nullptr)
-      //     units->publish_state(byte2float(message[2], message[3]));
-      //   break;
+      case 0x0E:
+        // ToDo: Make this to TextSensor
+        ESP_LOGV("maidsite_desk_controller", "sensor_units 0x%02X", message[2]);
+        if (sensor_units != nullptr)
+          sensor_units->publish_state(message[2]);
+        break;
+
+      case 0x19:
+        // ToDo: Make this to TextSensor
+        ESP_LOGV("maidsite_desk_controller", "sensor_touch_mode 0x%02X", message[2]);
+        if (sensor_touch_mode != nullptr)
+          sensor_touch_mode->publish_state(message[2]);
+        break;
 
       default:
         ESP_LOGV("maidsite_desk_controller", "unknown message %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X", message[0], message[1], message[2], message[3], message[4], message[5], message[6], message[7], message[8], message[9]);
@@ -183,10 +191,16 @@ namespace esphome
       write_array({0xF1, 0xF1, cmd, 0x00, cmd, 0x7E});
     }
 
-    void MaidsiteDeskController::send_2byte_command(unsigned char cmd, unsigned char high_byte, unsigned char low_byte)
+    void MaidsiteDeskController::send_1byte_command(unsigned char cmd, unsigned char byte0)
     {
-      unsigned char checksum = cmd + 2 + high_byte + low_byte;
-      write_array({ 0xF1, 0xF1, cmd, 0x02, high_byte, low_byte, checksum, 0x7E });
+      unsigned char checksum = cmd + 1 + byte0;
+      write_array({0xF1, 0xF1, cmd, 0x01, byte0, checksum, 0x7E});
+    }
+
+    void MaidsiteDeskController::send_2byte_command(unsigned char cmd, unsigned char byte0, unsigned char byte1)
+    {
+      unsigned char checksum = cmd + 2 + byte0 + byte1;
+      write_array({ 0xF1, 0xF1, cmd, 0x02, byte0, byte1, checksum, 0x7E });
     }
 
     void MaidsiteDeskController::step_up()
@@ -281,6 +295,30 @@ namespace esphome
       goto_height(limit_min);
     }
 
+    void MaidsiteDeskController::set_units(const std::string &value)
+    {
+      unsigned char payload = 0;
+      if (value == "mm")
+        payload = 0;
+      else if (value == "1/10 inch")
+        payload = 1;
+      else
+        return;
+      send_1byte_command(0x0E, payload);
+    }
+
+    void MaidsiteDeskController::set_touch_mode(const std::string &value)
+    {
+      unsigned char payload = 0;
+      if (value == "single")
+        payload = 0;
+      else if (value == "continuous")
+        payload = 1;
+      else
+        return;
+      send_1byte_command(0x19, payload);
+    }
+
     void MaidsiteDeskController::add_button(button::Button *btn, int action)
     {
       btn->add_on_press_callback([this, action]() { this->button_press_action(action); });
@@ -345,7 +383,7 @@ namespace esphome
     {
       switch (type)
       {
-      case NUMBER_HEIGHT:
+      case NUMBER_HEIGHT_ABS:
         number_height_abs = number;
         break;
       case NUMBER_HEIGHT_PCT:
@@ -365,7 +403,7 @@ namespace esphome
       ESP_LOGV("MaidsiteDeskController", "number_control %i", type);
       switch (type)
       {
-      case NUMBER_HEIGHT:
+      case NUMBER_HEIGHT_ABS:
         goto_height(value);
         break;
       case NUMBER_HEIGHT_PCT:
@@ -375,7 +413,37 @@ namespace esphome
       }
     }
 
-    void MaidsiteDeskButton::press_action() {}
+    void MaidsiteDeskController::add_select(MaidsiteDeskSelect *select, int type)
+    {
+      switch (type)
+      {
+      case NUMBER_SET_UNITS:
+        select_set_units = select;
+        select_set_units->set_options({"mm", "1/10 inch"});
+        break;
+      case NUMBER_SET_TOUCH_MODE:
+        select_set_touch_mode = select;
+        select_set_touch_mode->set_options({"single", "continuous"});
+        break;
+      default:
+        return;
+      }
+      number->set_type(type);
+      number->set_parent(this);
+    }
 
+    void MaidsiteDeskController::select_control(int type, const std::string &value)
+    {
+      ESP_LOGV("MaidsiteDeskController", "select_control %i", type);
+      switch (type)
+      {
+      case SELECT_SET_UNITS:
+        set_units(value);
+        break;
+      case SELECT_SET_TOUCH_MODE:
+        set_touch_mode(value);
+        break;
+      }
+    }
   } // namespace maidsite_desk_controller
 } // namespace esphome

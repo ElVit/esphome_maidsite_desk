@@ -6,7 +6,6 @@ namespace esphome
 {
   namespace maidsite_desk_controller
   {
-
     static const char *const TAG = "maidsite_desk.number";
 
     void MaidsiteDeskNumber::setup() {}
@@ -32,6 +31,5 @@ namespace esphome
     {
       traits.set_max_value(value);
     }
-
   } // namespace maidsite_desk_controller
 } // namespace esphome
