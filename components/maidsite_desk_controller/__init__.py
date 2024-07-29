@@ -157,20 +157,8 @@ CONFIG_SCHEMA = cv.COMPONENT_SCHEMA.extend({
     }),
   }),
   cv.Optional(CONF_SELECTS): cv.Schema({
-    cv.Optional(CONF_SET_UNITS): select.SELECT_SCHEMA.extend({
-      cv.GenerateID(): cv.declare_id(MaidsiteDeskSelect),
-      cv.Required(CONF_OPTIONS): cv.All(
-        cv.ensure_list(cv.string_strict), cv.Length(min=1)
-      ),
-      cv.Optional(CONF_INITIAL_OPTION): cv.string_strict,
-    }),
-    cv.Optional(CONF_SET_TOUCH_MODE): select.SELECT_SCHEMA.extend({
-      cv.GenerateID(): cv.declare_id(MaidsiteDeskSelect),
-      cv.Required(CONF_OPTIONS): cv.All(
-        cv.ensure_list(cv.string_strict), cv.Length(min=1)
-      ),
-      cv.Optional(CONF_INITIAL_OPTION): cv.string_strict,
-    }),
+    cv.Optional(CONF_SET_UNITS): select.select_schema(MaidsiteDeskSelect),
+    cv.Optional(CONF_SET_TOUCH_MODE): select.select_schema(MaidsiteDeskSelect),
   }),
 }).extend(uart.UART_DEVICE_SCHEMA)
 
@@ -226,12 +214,12 @@ async def to_code(config):
 
   if CONF_SELECTS in config:
     selects = config[CONF_SELECTS]
-    for select_type in selects.keys():
-      sel = await select.new_select(selects[select_type])
-      cg.add(var.add_select(sel, select_constants[select_type]))
-    # if CONF_SET_UNITS in selects:
-    #   sel = await select.new_select(selects[CONF_SET_UNITS], options=["0.2m", "0.75m"])
-    #   cg.add(var.add_select(sel, select_constants[CONF_SET_UNITS]))
-    # if CONF_SET_TOUCH_MODE in selects:
-    #   sel = await select.new_select(selects[CONF_SET_TOUCH_MODE], options=["0.2m", "0.75m"])
-    #   cg.add(var.add_select(sel, select_constants[CONF_SET_TOUCH_MODE]))
+    #for select_type in selects.keys():
+      #sel = await select.new_select(selects[select_type])
+      #cg.add(var.add_select(sel, #select_constants[select_type]))
+    if CONF_SET_UNITS in selects:
+      sel = await select.new_select(selects[CONF_SET_UNITS], options=["mm", "1/10 inch"])
+      cg.add(var.add_select(sel, select_constants[CONF_SET_UNITS]))
+    if CONF_SET_TOUCH_MODE in selects:
+      sel = await select.new_select(selects[CONF_SET_TOUCH_MODE], options=["single", "continuous"])
+      cg.add(var.add_select(sel, select_constants[CONF_SET_TOUCH_MODE]))

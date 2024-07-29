@@ -19,11 +19,12 @@ namespace esphome
     void MaidsiteDeskSelect::control(const std::string &value)
     {
       this->publish_state(value);
-      auto index = this->index_of(value);
-      if (index.has_value())
-      {
-        this->parent_->select_control(this->type, index.value());
-      }
+      parent->select_control(this->type, value);
+      //auto index = this->index_of(value);
+      //if (index.has_value())
+      //{
+      //  this->parent->select_control(this->type, index.value());
+      //}
     }
 
     void MaidsiteDeskSelect::set_options(std::vector<std::string> options)

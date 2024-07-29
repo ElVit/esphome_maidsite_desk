@@ -54,7 +54,7 @@ namespace esphome
       void add_number(MaidsiteDeskNumber *number, int type);
       void add_select(MaidsiteDeskSelect *select, int type);
       void number_control(int type, float value);
-      void select_control(int type, const std::string &value)
+      void select_control(int type, const std::string &value);
 
       void set_sensor_height(sensor::Sensor *sensor) { this->sensor_height = sensor; }
       void set_sensor_height_min(sensor::Sensor *sensor) { this->sensor_height_min = sensor; }
@@ -65,7 +65,7 @@ namespace esphome
       void set_sensor_position_m3(sensor::Sensor *sensor) { this->sensor_position_m3 = sensor; }
       void set_sensor_position_m4(sensor::Sensor *sensor) { this->sensor_position_m4 = sensor; }
       void set_sensor_units(sensor::Sensor *sensor) { this->sensor_units = sensor; }
-      void set_touch_mode(sensor::Sensor *sensor) { this->sensor_touch_mode = sensor; }
+      void set_sensor_touch_mode(sensor::Sensor *sensor) { this->sensor_touch_mode = sensor; }
 
       void send_simple_command(unsigned char cmd);
       void send_1byte_command(unsigned char cmd, unsigned char byte0);

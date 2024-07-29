@@ -417,19 +417,19 @@ namespace esphome
     {
       switch (type)
       {
-      case NUMBER_SET_UNITS:
+      case SELECT_SET_UNITS:
         select_set_units = select;
         select_set_units->set_options({"mm", "1/10 inch"});
         break;
-      case NUMBER_SET_TOUCH_MODE:
+      case SELECT_SET_TOUCH_MODE:
         select_set_touch_mode = select;
         select_set_touch_mode->set_options({"single", "continuous"});
         break;
       default:
         return;
       }
-      number->set_type(type);
-      number->set_parent(this);
+      select->set_type(type);
+      select->set_parent(this);
     }
 
     void MaidsiteDeskController::select_control(int type, const std::string &value)
