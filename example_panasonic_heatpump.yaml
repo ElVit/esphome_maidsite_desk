@@ -392,6 +392,8 @@ text_sensor:
       name: "SmartDHW"
     top141:
       name: "Quiet Mode Priority"
+    top143:
+      name: "DHW Sensor Selection"
 
 number:
   - platform: panasonic_heatpump
@@ -461,6 +463,12 @@ number:
       name: "Set Bivalent AP Start Temp"
     set38:
       name: "Set Bivalent AP Stop Temp"
+    set46:
+      name: "Set Heater On Outdoor Temp"
+    set47:
+      name: "Set Heat To Cool Temp"
+    set48:
+      name: "Set Cool To Heat Temp"
 
 switch:
   - platform: panasonic_heatpump
@@ -490,6 +498,8 @@ switch:
       name: "Set External Heat Cool Control"
     set34:
       name: "Set Bivalent Control"
+    error_reset:
+      name: "Error Reset (Restart Heatpump)"
 
 select:
   - platform: panasonic_heatpump
@@ -516,6 +526,12 @@ select:
       name: "Set Quiet Mode Priority"
     set42:
       name: "Set Pump Flow Rate Mode"
+    set43:
+      name: "Set DHW Sensor Selection"
+    set44:
+      name: "Set DHW Heater State"
+    set45:
+      name: "Set Room Heater State"
 
 climate:
   - platform: panasonic_heatpump

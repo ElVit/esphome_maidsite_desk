@@ -555,6 +555,10 @@ number:
       name: "Set Bivalent AP Stop Temp"
     set46:
       name: "Set Heater On Outdoor Temp"
+    set47:
+      name: "Set Heat To Cool Temp"
+    set48:
+      name: "Set Cool To Heat Temp"
 ```
 
 ### Switches
