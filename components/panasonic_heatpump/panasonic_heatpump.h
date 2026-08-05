@@ -12,7 +12,7 @@
 #include "commands.h"
 
 #ifndef PANASONIC_HEATPUMP_VERSION
-#define PANASONIC_HEATPUMP_VERSION "0.0.9"
+#define PANASONIC_HEATPUMP_VERSION "0.0.10"
 #endif
 
 #ifndef KEEP_STATE
