@@ -3,6 +3,7 @@
 namespace esphome {
 namespace panasonic_heatpump {
 static const char* const TAG = "panasonic_heatpump.sensor";
+static constexpr float KGF_CM2_TO_BAR = 0.980665f;  // 1 kgf/cm² = 0.980665 bar
 
 void PanasonicHeatpumpSensor::dump_config() {
   LOG_SENSOR("", "Panasonic Heatpump Sensor", this);
@@ -261,7 +262,7 @@ void PanasonicHeatpumpSensor::publish_new_state(const std::vector<uint8_t>& data
       return;
     break;
   case SensorIds::CONF_TOP64:
-    new_state = PanasonicDecode::getByteMinus1Div5(data[163]);
+    new_state = PanasonicDecode::getByteMinus1Div5(data[163]) * KGF_CM2_TO_BAR;
     if (this->has_state() && this->get_state() == new_state)
       return;
     break;
@@ -271,7 +272,7 @@ void PanasonicHeatpumpSensor::publish_new_state(const std::vector<uint8_t>& data
       return;
     break;
   case SensorIds::CONF_TOP66:
-    new_state = PanasonicDecode::getByteMinus1Times50(data[164]);
+    new_state = PanasonicDecode::getByteMinus1Times50(data[164]) * KGF_CM2_TO_BAR;
     if (this->has_state() && this->get_state() == new_state)
       return;
     break;
