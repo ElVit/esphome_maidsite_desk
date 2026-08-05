@@ -31,7 +31,6 @@ from .. import (
 
 UNIT_LITRE_PER_MINUTE = "L/min"
 UNIT_ROTATIONS_PER_MINUTE = "r/min"
-UNIT_PRESSURE_KGFCM2 = "kgf/cm²"
 UNIT_BAR = "bar"
 ICON_PUMP = "mdi:pump"
 ICON_VALVE = "mdi:pipe-valve"
@@ -604,7 +603,7 @@ CONFIG_SCHEMA = cv.Schema(
             accuracy_decimals=2,
             device_class=DEVICE_CLASS_PRESSURE,
             state_class=STATE_CLASS_MEASUREMENT,
-            unit_of_measurement=UNIT_PRESSURE_KGFCM2,
+            unit_of_measurement=UNIT_BAR,
         ),
         cv.Optional(CONF_TOP65): sensor.sensor_schema(
             PanasonicHeatpumpSensor,
@@ -618,7 +617,7 @@ CONFIG_SCHEMA = cv.Schema(
             accuracy_decimals=2,
             device_class=DEVICE_CLASS_PRESSURE,
             state_class=STATE_CLASS_MEASUREMENT,
-            unit_of_measurement=UNIT_PRESSURE_KGFCM2,
+            unit_of_measurement=UNIT_BAR,
         ),
         cv.Optional(CONF_TOP67): sensor.sensor_schema(
             PanasonicHeatpumpSensor,
