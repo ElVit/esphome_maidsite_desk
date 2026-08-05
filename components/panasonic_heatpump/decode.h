@@ -7,7 +7,7 @@
 #define RESPONSE_MSG_SIZE 203
 #endif
 #ifndef NUMBER_OF_MODELS
-#define NUMBER_OF_MODELS 67
+#define NUMBER_OF_MODELS 73
 #endif
 
 namespace esphome {
@@ -72,7 +72,7 @@ class PanasonicDecode {
   static const constexpr char* const QuietModePriority[] = {"2", "Sound", "Capacity"};
   static const constexpr char* const DHWSensorSelection[] = {"2", "Top", "Center"};
   static const constexpr char* const ModelNames[] = {
-      "67",                                  // string representation of number of known models (last model number + 1)
+      "73",                                  // string representation of number of known models (last model number + 1)
       "WH-MDC05H3E5",                        // 0
       "WH-MDC07H3E5",                        // 1
       "IDU:WH-SXC09H3E5, ODU:WH-UX09HE5",    // 2
@@ -140,6 +140,12 @@ class PanasonicDecode {
       "IDU:WH-ADC0509L3E5, ODU:WH-WDG09LE5",     // 64
       "IDU:WH-ADC0309J3E5, ODU:WH-UD09JE5-1",    // 65
       "IDU:WH-SDC12H6E5, ODU:WH-UD12HE5",        // 66
+      "IDU:WH-ADC0309J3E5C, ODU:WH-UD05JE5",     // 67
+      "IDU:WH-ADC0316M9E83, ODU:WH-WXG09ME8",    // 68
+      "IDU:WH-SDC09K3E8, ODU:WH-UDZ09KE8",       // 69
+      "IDU:WH-SQC16H9E8, ODU:WH-UQ16HE8",        // 70
+      "IDU:WH-SDC0509L6E5, ODU:WH-WDG09LE5",     // 71
+      "IDU:WH-SDC0316M9E8, ODU:WH-WXG09ME8",     // 72
   };
 };
 
